@@ -24,7 +24,6 @@ securityDefinitions:
     name: Authorization
     in: header
 
-# produces application/json and text/plain both?
 paths:
   "/v1/apps/{app_id}/events/send":
     post:
@@ -96,6 +95,11 @@ paths:
           required: true
           schema:
             $ref: "#/definitions/send_event_bulk"
+        - name: Idempotency-Key
+          in: header
+          type: string
+          required: false
+          description: idempotency key of api
       responses:
         "200":
           description: Message successfully accepted
@@ -146,12 +150,12 @@ definitions:
         type: array
         items:
           type: string
-        example: ["topic1","topic2"]
+        example: ["topic1", "topic2"]
       fcm_device_group:
         type: array
         items:
           type: string
-        example: ["grp1","grp2"]
+        example: ["grp1", "grp2"]
       slack:
         type: object
         items:
@@ -201,18 +205,18 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/email_recipient"
-#content override part
-#      text_body:
-#        type: string
-#      html_body:
-#        type: string
-#after reply to processor handling
-#      reply_to:
-#        type: string
-#        format: email
+      #content override part
+      #      text_body:
+      #        type: string
+      #      html_body:
+      #        type: string
+      #after reply to processor handling
+      #      reply_to:
+      #        type: string
+      #        format: email
       attachments:
         $ref: "#/definitions/attachments"
-      scheduled_at:
+      schedule_at:
         type: string
 
   sms_override:
@@ -220,37 +224,37 @@ definitions:
     properties:
       sender:
         type: string
-      scheduled_at:
+      schedule_at:
         type: string
 
   whatsapp_override:
     type: object
     properties:
-      scheduled_at:
+      schedule_at:
         type: string
 
   push_override:
     type: object
     properties:
-      scheduled_at:
+      schedule_at:
         type: string
 
   webhook_override:
     type: object
     properties:
-      scheduled_at:
+      schedule_at:
         type: string
 
   voice_override:
     type: object
     properties:
-      scheduled_at:
+      schedule_at:
         type: string
 
   slack_override:
     type: object
     properties:
-      scheduled_at:
+      schedule_at:
         type: string
 
   slack_profile:
@@ -326,7 +330,7 @@ definitions:
         $ref: "#/definitions/user"
       data:
         $ref: "#/definitions/data"
-      scheduled_at:
+      schedule_at:
         type: string
       override:
         $ref: "#/definitions/event_override"
@@ -410,10 +414,13 @@ definitions:
   error_response:
     type: object
     properties:
-      success:
-        type: boolean
-        enum: [false]
-        example: false
+      id:
+        type: string
+        example: "1d1ed73c-96e6-4aa3-abc2-2e9a926f773a"
+      #      success:
+      #        type: boolean
+      #        enum: [false]
+      #        example: false
       error:
         type: string
         example: "event not found"
