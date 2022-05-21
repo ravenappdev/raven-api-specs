@@ -160,6 +160,10 @@ definitions:
         type: object
         items:
           $ref: "#/definitions/slack_profile"
+      telegram:
+        type: object
+        items:
+          $ref: "#/definitions/telegram_profile"
       onesignal_player_ids:
         type: array
         items:
@@ -265,6 +269,12 @@ definitions:
       email:
         type: string
       channel_id:
+        type: string
+
+  telegram_profile:
+    type: object
+    properties:
+      chat_id:
         type: string
 
   param:
