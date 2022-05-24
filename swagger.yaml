@@ -261,6 +261,12 @@ definitions:
       schedule_at:
         type: string
 
+  telegram_override:
+  type: object
+  properties:
+    schedule_at:
+      type: string
+
   slack_profile:
     type: object
     properties:
@@ -322,6 +328,8 @@ definitions:
         $ref: "#/definitions/voice_override"
       slack:
         $ref: "#/definitions/slack_override"
+      telegram:
+        $ref: "#/definitions/telegram_override"
       providers:
         type: object
         additionalProperties:
